@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xyveria</title>
+<link rel="icon" type="image/png" href="tora.png">
+<style>
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, Helvetica, sans-serif;scroll-behavior:smooth;}
+body{background:radial-gradient(circle at top,#1c1000,#2c1c00);color:white;min-height:100vh;overflow-x:hidden;}
+
+/* NAVBAR */
+nav{display:flex;justify-content:space-between;align-items:center;padding:25px 60px;position:relative;z-index:10;}
+.nav-left, .nav-right{display:flex;gap:20px;align-items:center;}
+.logo{font-size:32px;font-weight:bold;color:#ffce54;}
+.nav-left a,.nav-right a{text-decoration:none;padding:12px 26px;border-radius:6px;font-weight:bold;font-size:14px;background:#ffce54;color:black;transition:0.3s;}
+.nav-left a:hover,.nav-right a:hover{background:#ffb800;}
+
+/* HERO */
+.hero{display:flex;justify-content:center;align-items:center;gap:120px;max-width:1200px;margin:auto;padding:80px 40px;height:80vh;position:relative;}
+.left{display:flex;flex-direction:column;align-items:center;gap:20px;}
+.left img{width:420px;filter:drop-shadow(0 0 60px rgba(255,180,0,0.7));}
+.status{background:#1a0f00;padding:18px 22px;border-radius:10px;border:1px solid rgba(255,200,0,0.3);font-size:14px;text-align:center;position:relative;}
+.status span{color:#ffce54;text-shadow:0 0 10px #ffce54,0 0 20px #ffb800;}
+.right{max-width:520px;position:relative;}
+.right::before{content:"";position:absolute;width:420px;height:420px;background:radial-gradient(circle,rgba(255,180,0,0.35),rgba(255,200,0,0.2),transparent);filter:blur(80px);z-index:-1;left:-80px;top:-80px;}
+.title{font-size:120px;font-weight:900;background:linear-gradient(90deg,#fff4b0,#ffce54,#ffb800);-webkit-background-clip:text;color:transparent;text-shadow:0 0 20px rgba(255,210,80,0.5),0 0 40px rgba(255,180,0,0.3);}
+.subtitle{margin-top:20px;color:#ffd97f;font-size:18px;line-height:1.6;text-shadow:0 0 15px rgba(255,180,0,0.25);}
+.run-btn{margin-top:30px;display:inline-block;padding:14px 32px;background:linear-gradient(90deg,#fff4b0,#ffce54,#ffb800);color:black;font-weight:bold;border-radius:8px;cursor:pointer;box-shadow:0 0 20px rgba(255,180,0,0.5);transition:0.3s;}
+.run-btn:hover{transform:translateY(-2px);box-shadow:0 0 35px rgba(255,180,0,0.8);}
+
+/* CA COPY */
+.ca-container{margin-top:2.5in;display:flex;align-items:center;gap:10px;cursor:pointer;}
+.ca-container span{font-weight:bold;color:#ffce54;text-shadow:0 0 10px #ffce54,0 0 20px #ffb800;}
+.copied-tooltip{font-size:14px;color:#4cecff;opacity:0;transition:0.3s;}
+
+/* BACKGROUND TEXT */
+.bg-text{position:absolute;font-size:420px;font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(255,180,0,0.15);top:40%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;animation:moveText 8s linear infinite;z-index:-2;}
+@keyframes moveText{0%{transform:translate(-60%,-50%)}50%{transform:translate(-40%,-50%)}100%{transform:translate(-60%,-50%)}}
+
+/* SECTIONS */
+.section{padding:100px 80px;background:#1a0f00;text-align:center;border-top:1px solid rgba(255,200,0,0.08);}
+.section h2{font-size:40px;color:#ffce54;margin-bottom:20px;text-shadow:0 0 10px #ffce54,0 0 20px #ffb800;}
+.section p{color:#ffd97f;font-size:18px;max-width:700px;margin:auto;line-height:1.6;text-shadow:0 0 8px #ffce54,0 0 15px #ffb800;}
+
+/* ARCHITECTURE GRID */
+.arch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;max-width:1200px;margin:auto;margin-top:40px;text-align:left;}
+.arch-item{padding:20px;border-radius:12px;background:#1c1000;border:1px solid;box-shadow:0 0 40px rgba(255,180,0,0.2);transition:0.3s;}
+.arch-item:hover{transform:translateY(-5px);box-shadow:0 0 60px rgba(255,255,255,0.5);}
+.arch-item h3{font-size:20px;margin-bottom:8px;text-shadow:0 0 12px;}
+.arch-item p{font-size:16px;line-height:1.5;text-shadow:0 0 10px;}
+
+/* Stronger glow per item */
+#item1 h3,#item1 p{color:#ffce54;text-shadow:0 0 15px #ffce54,0 0 35px #ffb800;border-color:#ffce54;box-shadow:0 0 40px #ffce54;}
+#item2 h3,#item2 p{color:#ff4c4c;text-shadow:0 0 15px #ff4c4c,0 0 35px #ff9999;border-color:#ff4c4c;box-shadow:0 0 40px #ff4c4c;}
+#item3 h3,#item3 p{color:#4cecff;text-shadow:0 0 15px #4cecff,0 0 35px #99faff;border-color:#4cecff;box-shadow:0 0 40px #4cecff;}
+#item4 h3,#item4 p{color:#4cff4c;text-shadow:0 0 15px #4cff4c,0 0 35px #99ff99;border-color:#4cff4c;box-shadow:0 0 40px #4cff4c;}
+#item5 h3,#item5 p{color:#b84cff;text-shadow:0 0 15px #b84cff,0 0 35px #d399ff;border-color:#b84cff;box-shadow:0 0 40px #b84cff;}
+#item6 h3,#item6 p{color:#ffa64c;text-shadow:0 0 15px #ffa64c,0 0 35px #ffd699;border-color:#ffa64c;box-shadow:0 0 40px #ffa64c;}
+
+/* BUTTONS */
+.launch-btn{display:inline-block;margin-top:30px;padding:14px 32px;background:linear-gradient(90deg,#fff4b0,#ffce54,#ffb800);color:black;font-weight:bold;border-radius:8px;cursor:pointer;box-shadow:0 0 20px rgba(255,180,0,0.5);transition:0.3s;}
+.launch-btn:hover{transform:translateY(-2px);box-shadow:0 0 35px rgba(255,180,0,0.8);}
+.community-btn{display:inline-block;margin-top:25px;padding:12px 28px;background:linear-gradient(90deg,#fff4b0,#ffce54,#ffb800);color:black;font-weight:bold;border-radius:8px;cursor:pointer;box-shadow:0 0 15px rgba(255,180,0,0.5);transition:0.3s;text-decoration:none;}
+.community-btn:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(255,180,0,0.8);}
+
+/* DEXSCREENER */
+#dex iframe{width:100%;max-width:1200px;height:700px;border:none;border-radius:12px;box-shadow:0 0 25px rgba(255,180,0,0.3);}
+
+/* LOGIN MODAL */
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:none;justify-content:center;align-items:center;z-index:1000;}
+.login-box{width:420px;padding:40px;border-radius:20px;background:#1f0f00;border:1px solid rgba(255,200,0,0.3);box-shadow:0 0 50px rgba(255,180,0,0.4);position:relative;}
+.close{position:absolute;top:18px;right:24px;font-size:24px;cursor:pointer;color:#ffce54;}
+.login-title{text-align:center;font-size:38px;font-weight:bold;color:#ffce54;}
+.login-title span{color:#ffb800;}
+.login-sub{text-align:center;margin-top:10px;margin-bottom:25px;color:#ffd97f;}
+.label{margin-top:12px;margin-bottom:6px;font-size:14px;color:#ffd97f;}
+input{width:100%;padding:15px;border-radius:10px;border:1px solid rgba(255,200,0,0.3);background:#2b1800;color:white;}
+.access-btn{margin-top:25px;width:100%;padding:16px;background:linear-gradient(90deg,#fff4b0,#ffce54,#ffb800);color:black;border:none;border-radius:10px;font-weight:bold;font-size:16px;cursor:pointer;transition:0.3s;}
+.access-btn:hover{background:linear-gradient(90deg,#ffce54,#ffb800,#ffc300);}
+.switch{text-align:center;margin-top:16px;font-size:14px;}
+.switch span{color:#ffce54;cursor:pointer;}
+.login-footer{display:flex;justify-content:space-between;margin-top:25px;font-size:11px;color:#ffd97f;}
+@media(max-width:900px){.hero{flex-direction:column;gap:40px;text-align:center;height:auto;}.title{font-size:70px;}.left img{width:300px;}.arch-grid{grid-template-columns: 1fr;gap:20px;}}
+</style>
+</head>
+<body>
+
+<div class="bg-text">Xyveria</div>
+
+<nav>
+  <div class="nav-left">
+    <div class="logo">Xyveria</div>
+    <a href="#dex">CHART</a>
+    <a href="https://pump.fun" target="_blank">BUY</a>
+  </div>
+  <div class="nav-right">
+    <a href="https://x.com" target="_blank">X</a>
+    <a href="#about">About</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#community">Community</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="left">
+    <img src="xyveria.png">
+    <div class="status">
+      Agent Status: <span>Online</span><br>
+      Alpha Version 2.5<br>
+      Built On Xyveria OS
+    </div>
+  </div>
+  <div class="right">
+    <div class="title">Xyveria</div>
+    <div class="subtitle">
+      Your Agentic Operating System.<br>
+      Build, orchestrate and collaborate with AI agents.
+    </div>
+    <div class="run-btn" onclick="openLogin()">Run Operating System</div>
+    <div class="ca-container" onclick="copyCA()">
+      <span id="caText">CA: <span id="caNumber">1231313124444</span></span>
+      <span id="copiedTooltip" class="copied-tooltip">Copied!</span>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="section">
+<h2>About</h2>
+<p>Xyveria is an AI operating system designed to coordinate autonomous agents and intelligent workflows.</p>
+</section>
+
+<section id="architecture" class="section">
+<h2>Architecture</h2>
+<p>Universally adaptable, completely yours. <a href="#" class="launch-btn" onclick="openLogin()">Launch OS</a></p>
+<div class="arch-grid">
+<div class="arch-item" id="item1"><h3>Agentic Core</h3><p>Autonomous AI agents that orchestrate complex workflows and execute tasks with human-like understanding.</p></div>
+<div class="arch-item" id="item2"><h3>Privacy Gateway</h3><p>Navigate the decentralized web with a browser designed for secure, agent-assisted interactions.</p></div>
+<div class="arch-item" id="item3"><h3>Local Privacy</h3><p>Your data and keys stay on your device. Agents run locally, ensuring complete sovereignty.</p></div>
+<div class="arch-item" id="item4"><h3>Solana Integration</h3><p>Native blockchain integration allowing agents to interact directly with DeFi protocols at lightning speed.</p></div>
+<div class="arch-item" id="item5"><h3>Command Center</h3><p>Advanced terminal interface for direct communication with your agent swarm and on-chain infrastructure.</p></div>
+<div class="arch-item" id="item6"><h3>High Performance</h3><p>Optimized runtime environment for instant AI reasoning and sub-second transaction settlement.</p></div>
+</div>
+</section>
+
+<section id="community" class="section">
+<h2>Community</h2>
+<p>Join developers and builders shaping the next generation of AI operating systems.</p>
+<a href="https://x.com" target="_blank" class="community-btn">JOIN COMMUNITY</a>
+</section>
+
+<section id="dex" class="section">
+<iframe src="https://dexscreener.com/solana/hvujow1px34paefc9uwuv7lrh7ta4usoprkztccdwa21?embed=1&theme=dark" scrolling="no"></iframe>
+</section>
+
+<div class="modal" id="modal">
+<div class="login-box">
+<div class="close" onclick="closeLogin()">✕</div>
+<div class="login-title">Xyveria<span>.OS</span></div>
+<div class="login-sub" id="formTitle">Initialize System Access</div>
+
+<form id="loginForm">
+<div class="label">EMAIL</div>
+<input type="email" placeholder="name@gmail.com" required>
+<div class="label">PASSWORD</div>
+<input type="password" placeholder="********" required>
+<button class="access-btn">Access System →</button>
+</form>
+
+<form id="signupForm" style="display:none">
+<div class="label">EMAIL</div>
+<input type="email" placeholder="name@gmail.com" required>
+<div class="label">PASSWORD</div>
+<input type="password" placeholder="Create password" required>
+<div class="label">CONFIRM PASSWORD</div>
+<input type="password" placeholder="Confirm password" required>
+<button class="access-btn">Create Protocol ID</button>
+</form>
+
+<div class="switch"><span onclick="toggleForm()">Create protocol ID</span></div>
+<div class="login-footer"><div>SYSTEM V2.5.0</div><div>SECURE CONNECTION</div></div>
+</div>
+</div>
+
+<script>
+function openLogin(){document.getElementById("modal").style.display="flex";}
+function closeLogin(){document.getElementById("modal").style.display="none";}
+function toggleForm(){
+  const login=document.getElementById("loginForm");
+  const signup=document.getElementById("signupForm");
+  const title=document.getElementById("formTitle");
+  if(login.style.display==="none"){
+    login.style.display="block";
+    signup.style.display="none";
+    title.innerText="Initialize System Access";
+  } else {
+    login.style.display="none";
+    signup.style.display="block";
+    title.innerText="Create Protocol ID";
+  }
+}
+function copyCA(){
+  const number=document.getElementById("caNumber").innerText;
+  navigator.clipboard.writeText(number).then(()=>{
+    const tooltip=document.getElementById("copiedTooltip");
+    tooltip.style.opacity=1;
+    setTimeout(()=>{tooltip.style.opacity=0;},1000);
+  });
+}
+</script>
+</body>
+</html>
